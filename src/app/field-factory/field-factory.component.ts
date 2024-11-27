@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   ComponentRef,
-  ViewChild,
+  signal,
+  viewChild,
   ViewContainerRef,
+  WritableSignal,
 } from '@angular/core';
 import { fieldByType, FieldComponents, FieldType } from './field-factory.model';
 
@@ -15,10 +17,11 @@ import { fieldByType, FieldComponents, FieldType } from './field-factory.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldFactoryComponent {
-  @ViewChild('fieldContainer', { read: ViewContainerRef, static: true })
-  container!: ViewContainerRef;
+  container = viewChild('fieldContainer', { read: ViewContainerRef });
 
-  private componentRef: ComponentRef<FieldComponents> | undefined;
+  private componentRef: WritableSignal<
+    ComponentRef<FieldComponents> | undefined
+  > = signal(undefined);
 
   fieldType = FieldType;
 
@@ -29,9 +32,14 @@ export class FieldFactoryComponent {
       throw new Error(`field type ${type} is not supported`);
     }
 
-    this.container.clear();
-    this.componentRef =
-      this.container.createComponent<FieldComponents>(component);
+    const container = this.container();
+
+    if (container) {
+      container.clear();
+      this.componentRef.set(
+        container.createComponent<FieldComponents>(component)
+      );
+    }
   }
 
   validateField() {
@@ -39,8 +47,12 @@ export class FieldFactoryComponent {
       throw new Error(`field isn't rendered`);
     }
 
-    const valid = this.componentRef.instance.validate();
-    console.log(valid);
+    const componentRef = this.componentRef();
+
+    if (componentRef) {
+      const valid = componentRef.instance.validate();
+      console.log(valid);
+    }
   }
 
   renderFieldValue() {
@@ -48,7 +60,11 @@ export class FieldFactoryComponent {
       throw new Error(`field isn't rendered`);
     }
 
-    const value = this.componentRef.instance.value;
-    console.log(value);
+    const componentRef = this.componentRef();
+
+    if (componentRef) {
+      const value = componentRef.instance.value;
+      console.log(value);
+    }
   }
 }
