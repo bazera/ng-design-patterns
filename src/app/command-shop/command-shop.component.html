@@ -1,0 +1,24 @@
+<h3>In Cart:</h3>
+
+<ul>
+  @for (item of shopService.cartItems; track item.id) {
+  <li>
+    {{ item.name }} &nbsp; <button (click)="removeFromCart(item)">-</button>
+  </li>
+  }
+</ul>
+
+<h5>Cart Cost: {{ sumCartCost() }}</h5>
+
+<h3>Shop For:</h3>
+
+<ul>
+  @for (item of shopService.shopItems; track item.id) {
+  <li>{{ item.name }} &nbsp; <button (click)="addToCart(item)">+</button></li>
+  }
+</ul>
+
+<button (click)="undo()">Undo</button>
+<button (click)="redo()">Redo</button>
+
+<h3>Action Log:</h3>

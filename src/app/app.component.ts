@@ -12,12 +12,18 @@ import { ApiStrategy } from '../environments/environment.model';
 import { Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ApiFactoryComponent } from './api-factory';
+import { CommandShopComponent } from './command-shop/command-shop.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [ThemeSwitcherComponent, FieldFactoryComponent, ApiFactoryComponent],
+  imports: [
+    ThemeSwitcherComponent,
+    FieldFactoryComponent,
+    ApiFactoryComponent,
+    CommandShopComponent,
+  ],
 })
 export class AppComponent {
   title = 'ng-design-patterns';
