@@ -13,6 +13,7 @@ import { Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ApiFactoryComponent } from './api-factory';
 import { CommandShopComponent } from './command-shop/command-shop.component';
+import { LoggerAdapterComponent } from './logger-adapter/logger-adapter.component';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ import { CommandShopComponent } from './command-shop/command-shop.component';
     FieldFactoryComponent,
     ApiFactoryComponent,
     CommandShopComponent,
+    LoggerAdapterComponent,
   ],
 })
 export class AppComponent {
